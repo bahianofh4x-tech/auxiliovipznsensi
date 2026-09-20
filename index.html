@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZN SENSI</title>
+<style>
+:root{--red:#ff1238;--red2:#8b001d;--bg:#070308;--panel:#12060b;--blue:#159cff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:#fff5f7;font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at 50% 0%,#ff12382e,transparent 35%),linear-gradient(135deg,#050206,#16030a 55%,#050206);overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(#fff1 1px,transparent 1px),linear-gradient(90deg,#fff1 1px,transparent 1px);background-size:32px 32px}
+header{text-align:center;padding:28px 16px 12px}.logo{font-size:clamp(32px,7vw,58px);font-weight:900;letter-spacing:6px;text-shadow:0 0 8px var(--red),0 0 25px var(--red),0 0 55px #ff123880}
+.container{width:min(980px,92%);margin:auto}.card{background:#12060be8;border:1px solid #ff123873;box-shadow:0 0 25px #ff12381f,inset 0 0 25px #ff12380a;border-radius:18px;padding:22px;backdrop-filter:blur(10px)}
+.login{max-width:520px;margin:25px auto}h2{margin-top:0;color:#ff5b78;text-shadow:0 0 10px #ff123899}label{display:block;margin:12px 0 6px;color:#d9abb5;font-size:13px}
+input,select{width:100%;padding:13px 14px;border-radius:10px;border:1px solid #54202c;background:#090307;color:#fff;outline:none}input:focus,select:focus{border-color:var(--red);box-shadow:0 0 12px #ff123840}
+button{border:0;border-radius:10px;padding:12px 16px;font-weight:800;cursor:pointer;color:#fff;background:linear-gradient(135deg,#b50028,#ff1238);box-shadow:0 0 14px #ff123847;transition:.2s}button:hover{transform:translateY(-1px);filter:brightness(1.12)}
+.primary{width:100%;margin-top:16px}.hidden{display:none!important}.status{margin-top:12px;min-height:20px;font-size:13px;color:#ff9aae}.dashboard{padding-bottom:80px}.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.badge{font-size:12px;padding:8px 10px;border-radius:999px;background:#240811;border:1px solid #6d1d31;color:#ff9aae}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px;margin-top:18px}.feature{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px;background:#0d0509;border:1px solid #3e151f;border-radius:14px}.feature small{display:block;color:#8e6971;margin-top:4px}
+.switch{position:relative;width:54px;height:30px;margin:0}.switch input{display:none}.slider{position:absolute;inset:0;border-radius:20px;background:#31121a;border:1px solid #6b2534}.slider:before{content:"";position:absolute;width:22px;height:22px;left:3px;top:3px;border-radius:50%;background:#8b6670;transition:.2s}.switch input:checked+.slider{background:#7e001f;box-shadow:0 0 14px #ff123899}.switch input:checked+.slider:before{transform:translateX(24px);background:#fff}
+.vip{border-color:#5b1b2a;background:linear-gradient(145deg,#16070d,#0b0407)}.inject{margin-top:22px;width:100%;font-size:18px;padding:17px;background:linear-gradient(135deg,#005dba,#159cff,#006fd1);box-shadow:0 0 18px #159cff8c,inset 0 0 10px #fff2}.inject:disabled{opacity:.7;cursor:not-allowed}
+.progress{height:9px;background:#19080d;border-radius:20px;overflow:hidden;margin-top:15px;border:1px solid #40131f}.bar{height:100%;width:0;background:linear-gradient(90deg,#006fd1,#2fb4ff);box-shadow:0 0 12px #159cff}.message{text-align:center;margin-top:14px;color:#a9dfff;min-height:22px}.footer{position:fixed;right:18px;bottom:14px;font-weight:900;letter-spacing:3px;color:#ff3357;text-shadow:0 0 12px var(--red)}
+.note{font-size:12px;color:#8f7077;line-height:1.5;margin-top:14px}.system{max-width:190px}
+</style></head><body>
+<header><div class="logo">ZN SENSI</div></header>
+<main class="container">
+<section id="login" class="card login"><h2>ACESSO AO PAINEL</h2>
+<label>Usuário</label><input id="user" placeholder="Digite o usuário">
+<label>Porta</label><input id="port" value="777" inputmode="numeric">
+<label>Key</label><input id="key" placeholder="Digite sua key" type="password">
+<label>Sistema</label><select id="system"><option value="">SELECIONE</option><option>IOS</option><option>ANDROID</option><option>PC</option></select>
+<button class="primary" onclick="login()">ENTRAR</button><div id="loginStatus" class="status"></div>
+<div class="note">A validade das keys é controlada pelo servidor. A key de 1 dia fica vinculada ao IP que realizou a ativação.</div></section>
+<section id="panel" class="dashboard hidden"><div class="card">
+<div class="topbar"><div><h2 style="margin-bottom:5px">PAINEL</h2><div id="account" class="badge"></div></div><button onclick="logout()">SAIR</button></div>
+<div class="grid">
+<div class="feature"><div><b>ANTRI-TREMEDEIRA</b><small>Controle de estabilidade</small></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+<div class="feature"><div><b>GRUDZ</b><small>Ajuste de aderência</small></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+<div class="feature vip"><div><b>DELIRIO CONFIG</b><small>Configuração VIP</small></div><label class="switch"><input id="vipToggle" type="checkbox"><span class="slider"></span></label></div>
+<div class="feature"><div><b>PRECISION</b><small>Controle fino da mira</small></div><label class="switch"><input type="checkbox"><span class="slider"></span></label></div>
+<div class="feature"><div><b>SISTEMA</b><small>Plataforma selecionada</small></div><select id="systemPanel" class="system"><option>IOS</option><option>ANDROID</option><option>PC</option></select></div>
+</div>
+<button id="injectBtn" class="inject" onclick="inject()">INJETAR</button><div class="progress"><div id="bar" class="bar"></div></div><div id="message" class="message"></div>
+<div class="note">A ação INJETAR é uma simulação visual de ativação do painel; não injeta código nem modifica o jogo.</div>
+</div></section></main><div class="footer">DELIRIO</div>
+<script>
+const API_BASE = location.protocol === "file:" ? "http://localhost:3000" : "";
+
+async function login(){
+ const s=document.getElementById("loginStatus"),username=user.value.trim().toUpperCase(),p=port.value.trim(),k=key.value.trim(),sys=system.value;
+ s.textContent="Verificando...";
+ try{
+  const r=await fetch(`${API_BASE}/api/login`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username,port:p,key:k,system:sys})});
+  let d={};
+  try{d=await r.json()}catch(_){}
+  if(!r.ok) throw new Error(d.error||`Servidor respondeu com erro (${r.status})`);
+  document.getElementById("login").classList.add("hidden");document.getElementById("panel").classList.remove("hidden");
+  account.textContent=`${username} • ${sys} • EXPIRA: ${new Date(d.expires_at).toLocaleString("pt-BR")}`;
+  systemPanel.value=sys;message.textContent=`ACESSO LIBERADO • ${d.days_remaining} dia(s) restante(s)`;
+ }catch(e){
+  if(e instanceof TypeError && /fetch/i.test(e.message)){
+    s.textContent="Não foi possível conectar ao servidor. Execute INICIAR_ZN_SENSI.bat e tente novamente.";
+  }else{ s.textContent=e.message; }
+ }
+}
+function logout(){location.reload()}
+function inject(){
+ const btn=injectBtn,bar=document.getElementById("bar"),msg=message;btn.disabled=true;msg.textContent="ATIVANDO SISTEMA...";
+ let p=0;const t=setInterval(()=>{p+=2;bar.style.width=p+"%";if(p>=100){clearInterval(t);msg.textContent="SISTEMA ATIVADO";btn.textContent="SISTEMA ATIVADO";setTimeout(()=>{btn.disabled=false;btn.textContent="INJETAR NOVAMENTE"},1200)}},35)
+}
+</script></body></html>
