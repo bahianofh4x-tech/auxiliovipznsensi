@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 const crypto = require('crypto');
 
-const HOST = '127.0.0.1';
+const HOST = '0.0.0.0';
 const PORT = Number(process.env.PORT || 3000);
 const ACCESS_PORT = '777';
 const PUBLIC_DIR = path.join(__dirname, 'public');
@@ -87,7 +87,7 @@ function serve(req,res) {
 
 const server=http.createServer(async(req,res)=>{
   if(req.method==='OPTIONS') return json(res,204,{});
-  if(req.method==='GET' && req.url==='/api/health') {
+  const PORT = Number(process.env.PORT || 3000);
     return json(res,200,{ok:true,service:'ZN SENSI',http_port:PORT,access_port:ACCESS_PORT,keys:Object.keys(db.licenses).length});
   }
   if(req.method==='POST' && req.url==='/api/login') {
