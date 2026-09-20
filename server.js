@@ -87,7 +87,8 @@ function serve(req,res) {
 
 const server=http.createServer(async(req,res)=>{
   if(req.method==='OPTIONS') return json(res,204,{});
-  const PORT = Number(process.env.PORT || 3000);
+
+  if(req.method==='GET' && (req.url==='/api/health' || req.url==='/healthz')) {
     return json(res,200,{ok:true,service:'ZN SENSI',http_port:PORT,access_port:ACCESS_PORT,keys:Object.keys(db.licenses).length});
   }
   if(req.method==='POST' && req.url==='/api/login') {
